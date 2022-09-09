@@ -18,8 +18,8 @@ public class ToDoController {
     private ToDoService service;
 
     @GetMapping
-    public List<ToDo> findAll(){
-        return service.getAll();
+    public List<ToDo> findAll(@RequestBody(required = false) ToDo toDo){
+        return service.getAll(toDo);
     }
 
     @GetMapping("{id}")
@@ -35,9 +35,21 @@ public class ToDoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ToDo> updateTodo(@Valid @RequestBody ToDo toDo){
-        ToDo t = service.update(toDo);
-        return new ResponseEntity<ToDo>(t, HttpStatus.OK);
+    public ResponseEntity<String> updateTodo(@Valid @RequestBody ToDo toDo){
+        String t = service.update(toDo);
+        return new ResponseEntity<String>(t, HttpStatus.OK);
+    }
+
+    @PostMapping("{id}/done")
+    public ResponseEntity<String> markAsDone(@PathVariable String id){
+        String t = service.markAsDone(id);
+        return new ResponseEntity<String>(t, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}/undone")
+    public ResponseEntity<String> markAsUndone(@PathVariable String id){
+        String t = service.markAsUndone(id);
+        return new ResponseEntity<String>(t, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

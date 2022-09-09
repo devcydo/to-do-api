@@ -12,8 +12,8 @@ public class ToDoService {
     @Autowired
     private ToDoRepository repository;
 
-    public List<ToDo> getAll(){
-        return repository.findAll();
+    public List<ToDo> getAll(ToDo toDo){
+        return repository.findAll(toDo);
     }
 
     public ToDo getById(String id){
@@ -24,8 +24,16 @@ public class ToDoService {
         return repository.save(toDo);
     }
 
-    public ToDo update(ToDo toDo){
+    public String update(ToDo toDo){
         return repository.update(toDo);
+    }
+
+    public String markAsDone(String id){
+        return repository.markAsDone(id);
+    }
+
+    public String markAsUndone(String id){
+        return repository.markAsUndone(id);
     }
 
     public String delete(String id) {
