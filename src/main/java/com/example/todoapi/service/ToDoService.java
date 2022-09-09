@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ToDoService {
     @Autowired
     private ToDoRepository repository;
 
-    public List<ToDo> getAll(ToDo toDo){
-        return repository.findAll(toDo);
+    public List<ToDo> getAll(Map<String, String> params){
+        return repository.findAll(params);
     }
 
     public ToDo getById(String id){

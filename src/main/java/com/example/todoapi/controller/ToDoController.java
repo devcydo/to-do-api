@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/todos")
@@ -17,9 +18,10 @@ public class ToDoController {
     @Autowired
     private ToDoService service;
 
-    @GetMapping
-    public List<ToDo> findAll(@RequestBody(required = false) ToDo toDo){
-        return service.getAll(toDo);
+//    @GetMapping("{params}")
+    @RequestMapping(method = RequestMethod.GET)
+    public List<ToDo> findAll(@RequestParam(required = false) Map<String, String> params){
+        return service.getAll(params);
     }
 
     @GetMapping("{id}")

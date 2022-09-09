@@ -5,25 +5,37 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
 public class ToDoRepository{
     private List<ToDo> toDos = new ArrayList<ToDo>();
 
-    public List<ToDo> findAll(ToDo toDo){
-        //Filter options
-        if(toDo != null)
-            return toDos.stream()
-                    .filter(t -> t.getName().contains(toDo.getName()) || t.getPriority() == toDo.getPriority() || t.getIsDone() == toDo.getIsDone())
-                    .collect(Collectors.toList());
+    public List<ToDo> findAll(Map<String, String> params){
+        List<ToDo> filteredTodos = toDos;
 
+        //Filter options
+        if(params != null) {
+            if(params.containsKey("sortDueDate")){
+                if(params.get("sortDueDate").equals("desc")) Collections.sort(filteredTodos, ToDo.DueDateComparator);
+                else Collections.sort(filteredTodos, ToDo.DueDateComparator.reversed());
+            }
+
+            if(params.containsKey("sortPriority")){
+                if(params.get("sortPriority").equals("desc")) Collections.sort(filteredTodos, ToDo.PriorityComparator);
+                else Collections.sort(filteredTodos, ToDo.PriorityComparator.reversed());
+            }
+
+            return filteredTodos.stream()
+                    .filter(t ->
+                            t.getName().toLowerCase().contains(params.getOrDefault("name", "").toLowerCase()) &&
+                                    params.getOrDefault("priority", "1 2 3").contains(t.getPriority().toString()) &&
+                                    params.getOrDefault("isDone", "false true").contains(t.getIsDone().toString())
+                    ).collect(Collectors.toList());
+        }
         //Get all
-        else return toDos;
+        return toDos;
     }
 
     public ToDo findById(String id){

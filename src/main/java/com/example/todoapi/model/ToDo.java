@@ -2,8 +2,9 @@ package com.example.todoapi.model;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Comparator;
 
-public class ToDo {
+public class ToDo{
     private String id;
 
     @NotNull(message = "required")
@@ -79,4 +80,21 @@ public class ToDo {
     public void setCreatedAd(LocalDate createdAd) {
         this.createdAd = createdAd;
     }
+
+    public static Comparator<ToDo> DueDateComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo o1, ToDo o2) {
+            if(o1.getDueDate() == null || o2.getDueDate() == null){
+                return 0;
+            }
+            return o1.getDueDate().compareTo(o2.getDueDate());
+        }
+    };
+
+    public static Comparator<ToDo> PriorityComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo o1, ToDo o2) {
+            return o1.getPriority() - o2.getPriority();
+        }
+    };
 }
