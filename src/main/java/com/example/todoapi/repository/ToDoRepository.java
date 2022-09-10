@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class ToDoRepository{
         toDo.setDueDate(t.getDueDate());
         toDo.setIsDone(false);
         toDo.setPriority(t.getPriority());
-        toDo.setCreatedAd(LocalDate.now());
+        toDo.setCreatedAt(LocalDateTime.now());
 
         toDos.add(toDo);
 
@@ -92,7 +93,7 @@ public class ToDoRepository{
         }
 
         toDos.get(idx).setIsDone(true);
-        toDos.get(idx).setDoneAt(LocalDate.now());
+        toDos.get(idx).setDoneAt(LocalDateTime.now());
 
         return "Marked as done";
     }

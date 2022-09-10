@@ -2,6 +2,7 @@ package com.example.todoapi.model;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 
 public class ToDo{
@@ -16,14 +17,14 @@ public class ToDo{
 
     private Boolean isDone;
 
-    private LocalDate doneAt;
+    private LocalDateTime doneAt;
 
     @NotNull
-    @Min(0)
+    @Min(1)
     @Max(3)
     private Integer priority;
 
-    private LocalDate createdAd;
+    private LocalDateTime createdAt;
 
     public String getId() {
         return id;
@@ -57,11 +58,11 @@ public class ToDo{
         this.isDone = isDone;
     }
 
-    public LocalDate getDoneAt() {
+    public LocalDateTime getDoneAt() {
         return doneAt;
     }
 
-    public void setDoneAt(LocalDate doneAt) {
+    public void setDoneAt(LocalDateTime doneAt) {
         this.doneAt = doneAt;
     }
 
@@ -73,12 +74,12 @@ public class ToDo{
         this.priority = priority;
     }
 
-    public LocalDate getCreatedAd() {
-        return createdAd;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedAd(LocalDate createdAd) {
-        this.createdAd = createdAd;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public static Comparator<ToDo> DueDateComparator = new Comparator<ToDo>() {

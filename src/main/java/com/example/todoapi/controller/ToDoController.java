@@ -18,7 +18,6 @@ public class ToDoController {
     @Autowired
     private ToDoService service;
 
-//    @GetMapping("{params}")
     @RequestMapping(method = RequestMethod.GET)
     public List<ToDo> findAll(@RequestParam(required = false) Map<String, String> params){
         return service.getAll(params);
